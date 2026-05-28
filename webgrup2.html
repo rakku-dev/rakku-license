@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Nijigasaki VA · Komunitas Seiyu</title>
+
+    <!-- ========== OPEN GRAPH / WHATSAPP THUMBNAIL ========== -->
+    <meta property="og:title" content="Nijigasaki VA · Komunitas Seiyu" />
+    <meta property="og:description" content="Komunitas seiyu dan impersonate. Official admin, event rutin, dan vibes positif." />
+    <meta property="og:image" content="https://raw.githubusercontent.com/rakku-dev/rakkustorage/main/image/waiter-simf.jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://namadomainkamu.com" /> <!-- GANTI DENGAN URL ASLI WEBMU -->
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card (opsional) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nijigasaki VA · Komunitas Seiyu" />
+    <meta name="twitter:description" content="Komunitas seiyu dan impersonate." />
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/rakku-dev/rakkustorage/main/image/waiter-simf.jpeg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --bg-primary: #050508;
+            --bg-secondary: #0E0E14;
+            --card-bg: rgba(18, 18, 24, 0.85);
+            --text-primary: #F0F0F8;
+            --text-dim: #A0A0B0;
+            --accent: #E0E0E8;
+            --accent-gradient: linear-gradient(135deg, #E0E0E8, #B0B0C0);
+            --border: rgba(255, 255, 255, 0.12);
+            --shadow: 0 25px 40px -15px rgba(0,0,0,0.6);
+            --navbar-bg: rgba(8, 8, 12, 0.85);
+            --card-hover: rgba(30, 30, 38, 0.9);
+            --drawer-bg: rgba(12, 12, 18, 0.96);
+            --avatar-size: 100px;
+        }
+        body.light {
+            --bg-primary: #F8F8FC;
+            --bg-secondary: #EFEFF4;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-primary: #111118;
+            --text-dim: #555568;
+            --accent: #2C2C3A;
+            --accent-gradient: linear-gradient(135deg, #3A3A4A, #5A5A6A);
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 8px 20px rgba(0,0,0,0.06);
+            --navbar-bg: rgba(248, 248, 252, 0.85);
+            --card-hover: rgba(235, 235, 240, 0.95);
+            --drawer-bg: rgba(240, 240, 245, 0.96);
+        }
+        body {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.2s;
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: var(--bg-primary);
+            background-image: linear-gradient(var(--border) 0.5px, transparent 0.5px), linear-gradient(90deg, var(--border) 0.5px, transparent 0.5px);
+            background-size: 36px 36px;
+        }
+        body.light .bg-grid {
+            background-image: linear-gradient(rgba(0,0,0,0.05) 0.5px, transparent 0.5px), linear-gradient(90deg, rgba(0,0,0,0.05) 0.5px, transparent 0.5px);
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            background: rgba(180, 180, 200, 0.2);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.2; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* PRELOADER ELEGAN */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #030308;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            transition: opacity 0.8s, visibility 0.8s;
+        }
+        body.light .preloader { background: #E8E8F0; }
+        .preloader.hide { opacity: 0; visibility: hidden; }
+        .preloader-cube {
+            width: 85px;
+            height: 85px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: spinNeon 1.8s infinite cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            filter: drop-shadow(0 0 8px rgba(200,200,220,0.4));
+        }
+        .preloader-cube div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #E8E8F0, #A0A0B0);
+            border-radius: 16px;
+            box-shadow: 0 0 12px rgba(255,255,255,0.2);
+        }
+        .cube-front { transform: translateZ(42px); background: #F0F0F8; }
+        .cube-back { transform: rotateY(180deg) translateZ(42px); background: #B0B0B8; }
+        .cube-right { transform: rotateY(90deg) translateZ(42px); background: #C8C8D0; }
+        .cube-left { transform: rotateY(-90deg) translateZ(42px); background: #888890; }
+        .cube-top { transform: rotateX(90deg) translateZ(42px); background: #D8D8E0; }
+        .cube-bottom { transform: rotateX(-90deg) translateZ(42px); background: #707078; }
+        @keyframes spinNeon {
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+        .preloader-text {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 6px;
+            background: linear-gradient(135deg, #F0F0F8, #A0A0A8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            opacity: 0;
+            animation: textReveal 0.8s forwards 0.3s;
+            position: relative;
+        }
+        @keyframes textReveal {
+            0% { opacity: 0; transform: scale(0.9); letter-spacing: 6px; }
+            100% { opacity: 1; transform: scale(1); letter-spacing: 10px; }
+        }
+        .preloader-text::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #A0A0B0, transparent);
+            animation: lineGlow 1.5s infinite;
+        }
+        @keyframes lineGlow {
+            0% { opacity: 0.2; width: 0%; left: 50%; }
+            50% { opacity: 0.8; width: 80%; left: 10%; }
+            100% { opacity: 0.2; width: 0%; left: 50%; }
+        }
+        .preloader-dots {
+            display: flex;
+            gap: 12px;
+        }
+        .preloader-dots span {
+            width: 10px;
+            height: 10px;
+            background: #A0A0B0;
+            border-radius: 50%;
+            animation: bounceWave 0.8s infinite alternate;
+        }
+        .preloader-dots span:nth-child(2) { animation-delay: 0.2s; background: #C8C8D0; }
+        .preloader-dots span:nth-child(3) { animation-delay: 0.4s; background: #E0E0E8; }
+        @keyframes bounceWave {
+            0% { transform: translateY(0); opacity: 0.4; }
+            100% { transform: translateY(-15px); opacity: 1; }
+        }
+
+        .main-content { opacity: 0; transition: opacity 1s ease; position: relative; z-index: 1; }
+        .main-content.reveal { opacity: 1; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7rem 1.5rem;
+            background: var(--navbar-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 2rem;
+            margin-top: 1.2rem;
+            border: 1px solid var(--border);
+            position: sticky;
+            top: 1rem;
+            z-index: 100;
+        }
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .menu-icon {
+            background: var(--bg-secondary);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            transition: 0.2s;
+            color: var(--text-primary);
+        }
+        .menu-icon:hover {
+            background: var(--accent);
+            color: black;
+        }
+        .logo h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(120deg, #FFF, #C0C0CC);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        .nav-icon {
+            background: var(--bg-secondary);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            transition: 0.2s;
+            color: var(--text-primary);
+        }
+        .nav-icon:hover {
+            background: var(--accent);
+            color: black;
+        }
+
+        /* Drawer */
+        .drawer {
+            position: fixed;
+            top: 0;
+            left: -360px;
+            width: 320px;
+            height: 100%;
+            background: var(--drawer-bg);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: left 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 2px 0 20px rgba(0,0,0,0.5);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .drawer.open { left: 0; }
+        .drawer-header-img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+            border-bottom: 1px solid var(--border);
+        }
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .drawer-close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--accent);
+        }
+        .drawer-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.2rem;
+        }
+        .drawer-nav a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .drawer-nav a i { width: 28px; }
+        .drawer-nav a:hover { color: var(--accent); transform: translateX(6px); }
+
+        .hero-banner {
+            margin: 2rem 0 2rem;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .banner-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            max-height: 420px;
+        }
+
+        .about-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            padding: 2rem;
+            margin: 1rem 0 2rem;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .group-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--accent);
+            color: #0A0A0C;
+            padding: 0.7rem 1.5rem;
+            border-radius: 3rem;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: 0.2s;
+        }
+        .group-btn:hover { transform: scale(1.02); }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .profile-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .profile-card:hover {
+            transform: translateY(-6px);
+            background: var(--card-hover);
+            border-color: var(--accent);
+        }
+        .edit-icon {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--bg-secondary);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            transition: 0.2s;
+            z-index: 5;
+        }
+        .edit-icon:hover {
+            background: var(--accent);
+            color: black;
+        }
+        .direct-link-icon {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--bg-secondary);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            transition: 0.2s;
+            z-index: 5;
+        }
+        .direct-link-icon:hover {
+            background: var(--accent);
+            color: black;
+        }
+        .avatar-frame {
+            width: var(--avatar-size);
+            height: var(--avatar-size);
+            margin: 0 auto 0.8rem;
+            position: relative;
+        }
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+        }
+        .profile-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 0.3rem;
+        }
+        .verified-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .verified-icon img {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .profile-bio {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .sosmed-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 0.8rem 0;
+        }
+        .sosmed-icons a {
+            color: var(--text-dim);
+            font-size: 1.3rem;
+            transition: 0.2s;
+        }
+        .sosmed-icons a:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .chat-btn {
+            background: rgba(255,255,255,0.08);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+            border: 1px solid var(--border);
+        }
+        .chat-btn:hover {
+            background: var(--accent);
+            color: black;
+        }
+        .chat-btn.disabled {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .testimonial-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            border: 1px solid var(--border);
+        }
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+        }
+        .testimonial-author {
+            font-weight: 500;
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        .admin-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .admin-overlay.active { visibility: visible; opacity: 1; }
+        .admin-modal {
+            background: var(--bg-primary);
+            border-radius: 2rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid var(--accent);
+        }
+        .admin-modal input, .admin-modal textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            color: var(--text-primary);
+        }
+        .admin-modal button {
+            background: var(--accent);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        .close-admin { background: #FF6B6B; margin-left: 0.5rem; color: white; }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+            font-size: 0.8rem;
+        }
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.8s, transform 0.7s;
+        }
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .floating-btns {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 200;
+        }
+        .float-btn {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid var(--accent);
+            transition: 0.2s;
+            color: var(--text-primary);
+        }
+        .float-btn:hover { transform: scale(1.05); background: var(--accent); color: black; }
+
+        @media (max-width: 760px) {
+            .container { padding: 0 1rem; }
+            .profile-grid { gap: 1rem; }
+            .drawer { width: 280px; }
+            :root { --avatar-size: 85px; }
+        }
+    </style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="particles" id="particles"></div>
+
+<div id="preloader" class="preloader">
+    <div class="preloader-cube">
+        <div class="cube-front"></div><div class="cube-back"></div><div class="cube-right"></div><div class="cube-left"></div><div class="cube-top"></div><div class="cube-bottom"></div>
+    </div>
+    <div class="preloader-text">Nijigasaki</div>
+    <div class="preloader-dots"><span></span><span></span><span></span></div>
+    <p style="font-size:0.75rem;">loading experience ...</p>
+</div>
+
+<div id="mainContent" class="main-content">
+    <div class="container">
+        <div class="navbar">
+            <div class="navbar-left">
+                <div class="menu-icon" id="menuIcon"><i class="fas fa-bars"></i></div>
+                <div class="logo"><h2>Nijigasaki VA ✦</h2></div>
+            </div>
+            <div class="nav-buttons">
+                <div id="themeToggle" class="nav-icon"><i class="fas fa-moon"></i></div>
+                <div id="adminLock" class="nav-icon"><i class="fas fa-lock"></i></div>
+            </div>
+        </div>
+
+        <!-- Drawer -->
+        <div id="drawer" class="drawer">
+            <img class="drawer-header-img" src="https://raw.githubusercontent.com/rakku-dev/rakkustorage/main/image/waiter-nadv.jpeg" alt="Drawer Banner" onerror="this.src='https://placehold.co/320x150/2A2A30/FFF?text=Nijigasaki'">
+            <div class="drawer-header">
+                <span style="font-weight:600;"><i class="fas fa-star"></i> Menu Navigasi</span>
+                <div class="drawer-close" id="closeDrawer"><i class="fas fa-times"></i></div>
+            </div>
+            <div class="drawer-nav">
+                <a href="#beranda" id="drawerHome"><i class="fas fa-home"></i> Beranda</a>
+                <a href="#admin-section" id="drawerAdminSection"><i class="fas fa-lock"></i> Admin Panel</a>
+                <a href="#komunitas" id="drawerKomunitas"><i class="fas fa-users"></i> Official Admin</a>
+                <a href="#testi" id="drawerTesti"><i class="fas fa-comment-dots"></i> Testimoni</a>
+                <a href="https://chat.whatsapp.com/KBVa8PQmuln5U6wYGkXzBX" target="_blank"><i class="fab fa-whatsapp"></i> Group WhatsApp</a>
+            </div>
+        </div>
+
+        <div id="beranda" class="hero-banner scroll-reveal">
+            <img class="banner-img" src="https://raw.githubusercontent.com/rakku-dev/rakkustorage/main/image/waiter-simf.jpeg" alt="Nijigasaki Banner" onerror="this.src='https://placehold.co/1600x600/1A1A24/FFF?text=Nijigasaki+VA'">
+        </div>
+
+        <div class="about-card scroll-reveal">
+            <h3><i class="fas fa-star"></i> Tentang Komunitas</h3>
+            <p style="margin: 1rem 0;">Nijigasaki VA adalah komunitas dimana sejumlah anggota akan memperagakan masing masing suara dengan type atau konsep tertentu. Disini ada event impersonate atau bisa disebut dub char dari anime yang disukai masing masing!</p>
+            <a href="https://chat.whatsapp.com/KBVa8PQmuln5U6wYGkXzBX" target="_blank" class="group-btn"><i class="fab fa-whatsapp"></i> Join Group WhatsApp</a>
+        </div>
+
+        <div id="komunitas" class="section-title scroll-reveal"><i class="fas fa-users"></i> <span>Official Admin</span></div>
+        <div class="profile-grid" id="profileGrid"></div>
+
+        <div id="testi" class="section-title scroll-reveal"><i class="fas fa-comment-dots"></i> <span>💬 Yang Mereka Katakan</span></div>
+        <div class="testimonial-grid scroll-reveal" id="testimonialGrid"></div>
+
+        <footer class="scroll-reveal">
+            <p>© Nijigasaki VA — Official Blog</p>
+            <p><i class="fas fa-headset"></i> Komunitas Seiyu & Impersonate</p>
+        </footer>
+    </div>
+</div>
+
+<div class="floating-btns">
+    <div id="musicToggle" class="float-btn"><i class="fas fa-volume-up"></i></div>
+</div>
+
+<div id="adminModal" class="admin-overlay">
+    <div class="admin-modal">
+        <h3><i class="fas fa-crown"></i> Admin Panel</h3>
+        <p style="font-size:0.8rem;">Password: rakkutheprince</p>
+        <input type="password" id="adminPass" placeholder="Masukkan password">
+        <button id="unlockAdmin">Buka Panel</button>
+        <div id="adminContent" style="display: none; margin-top: 1rem;">
+            <p>Admin mode aktif. Klik ikon pensil untuk edit profil.</p>
+            <button id="closeAdminBtn" class="close-admin">Tutup</button>
+        </div>
+    </div>
+</div>
+
+<audio id="bgMusic" loop preload="auto">
+    <source src="https://raw.githubusercontent.com/rakku-dev/rakkustorage/main/audio/waiter-7nmi.mpeg" type="audio/mpeg">
+</audio>
+
+<script>
+    (function() {
+        const preloader = document.getElementById('preloader');
+        const main = document.getElementById('mainContent');
+        main.classList.remove('reveal');
+        let revealed = false;
+        function revealSite() {
+            if(revealed) return;
+            revealed = true;
+            setTimeout(() => {
+                preloader.classList.add('hide');
+                main.classList.add('reveal');
+                setTimeout(() => { if(preloader) preloader.style.display = 'none'; }, 800);
+                initScrollReveal();
+                createParticles();
+                loadProfiles();
+                loadTestimonials();
+                initDrawer();
+            }, 400);
+        }
+        window.addEventListener('load', revealSite);
+        setTimeout(revealSite, 2200);
+
+        function initScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('revealed'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+        }
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for(let i=0;i<45;i++) {
+                const p = document.createElement('div');
+                p.classList.add('particle');
+                let size = Math.random() * 6 + 2;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = Math.random() * 18 + 10 + 's';
+                p.style.animationDelay = Math.random() * 12 + 's';
+                container.appendChild(p);
+            }
+        }
+
+        const defaultProfiles = [
+            { id:0, name:"Rakku", bio:"The Prince", avatar:"https://raw.githubusercontent.com/rakku-dev/rakkustorage/main/image/waiter-2of3.jpeg", verified:true, ig:"https://instagram.com/kyourakku_", tt:"https://www.tiktok.com/@kyourakku_", wa:"+62 838-3013-0235", waNumber:"6283830130235" },
+            { id:1, name:"zanekoo(aroy)", bio:"member hunter / king of slayer", avatar:"https://raw.githubusercontent.com/rakku-dev/rakkustorage/main/image/waiter-hs54.jpeg", verified:false, ig:null, tt:null, wa:"+62 838-2459-5194", waNumber:"6283824595194" },
+            { id:2, name:"mikandashiori", bio:"mikanda dipanggil nyaut", avatar:"https://raw.githubusercontent.com/rakku-dev/rakkustorage/main/image/waiter-v4jf.jpeg", verified:false, ig:null, tt:null, wa:"+62 899-0909-117", waNumber:"628990909117" },
+            { id:3, name:"kiy'A", bio:"kiy or kia? kyaah~", avatar:"https://raw.githubusercontent.com/rakku-dev/rakkustorage/main/image/waiter-mkqe.jpeg", verified:false, ig:null, tt:null, wa:"+62 813-7153-8154", waNumber:"6281371538154" },
+            { id:4, name:"Reanna kanzzy (Rea)", bio:"istri dady Sukuna", avatar:"https://raw.githubusercontent.com/rakku-dev/rakkustorage/main/image/waiter-x1ty.jpeg", verified:false, ig:null, tt:null, wa:"+62 856-2441-8793", waNumber:"6285624418793" },
+            { id:5, name:"cutieáchel!", bio:"the rest, is silence", avatar:"https://raw.githubusercontent.com/rakku-dev/rakkustorage/main/image/waiter-swo7.jpeg", verified:false, ig:null, tt:null, wa:"+62 812-9100-0179", waNumber:"6281291000179" },
+            { id:6, name:"vean†", bio:"👅👅", avatar:"https://raw.githubusercontent.com/rakku-dev/rakkustorage/main/image/waiter-vuar.jpeg", verified:false, ig:null, tt:null, wa:"+62 831-8025-8027", waNumber:"6283180258027" },
+            { id:7, name:"uka (obake)", bio:"hai manis", avatar:"https://raw.githubusercontent.com/rakku-dev/rakkustorage/main/image/waiter-yq67.jpeg", verified:false, ig:null, tt:null, wa:"083827769826", waNumber:"6283827769826" }
+        ];
+
+        let profiles = [];
+
+        function loadProfiles() {
+            const saved = localStorage.getItem('nijigasaki_profiles');
+            if (saved) profiles = JSON.parse(saved);
+            else profiles = JSON.parse(JSON.stringify(defaultProfiles));
+            renderProfiles();
+        }
+
+        function renderProfiles() {
+            const grid = document.getElementById('profileGrid');
+            grid.innerHTML = '';
+            profiles.forEach((p, idx) => {
+                const card = document.createElement('div');
+                card.className = 'profile-card';
+                card.setAttribute('data-id', idx);
+                let verifiedHtml = '';
+                if (p.verified) {
+                    verifiedHtml = `<span class="verified-icon"><img src="https://raw.githubusercontent.com/bagus-api/storage/master/emaeA.jpeg" alt="verified"></span>`;
+                }
+                let igHtml = p.ig ? `<a href="${p.ig}" target="_blank"><i class="fab fa-instagram"></i></a>` : `<a href="#" style="pointer-events:none; opacity:0.4;"><i class="fab fa-instagram"></i></a>`;
+                let ttHtml = p.tt ? `<a href="${p.tt}" target="_blank"><i class="fab fa-tiktok"></i></a>` : `<a href="#" style="pointer-events:none; opacity:0.4;"><i class="fab fa-tiktok"></i></a>`;
+                let chatHtml = p.waNumber ? `<a href="https://wa.me/${p.waNumber}" target="_blank" class="chat-btn"><i class="fab fa-whatsapp"></i> Chat</a>` : `<a href="#" class="chat-btn disabled"><i class="fab fa-whatsapp"></i> No WA</a>`;
+                card.innerHTML = `
+                    <div class="direct-link-icon" data-link="${idx}"><i class="fas fa-link"></i></div>
+                    <div class="edit-icon" data-edit="${idx}"><i class="fas fa-pen"></i></div>
+                    <div class="avatar-frame">
+                        <img class="avatar-img" src="${p.avatar || 'https://placehold.co/110x110/2A2A30/FFF?text=No+Image'}" alt="${escapeHtml(p.name)}" onerror="this.src='https://placehold.co/110x110/2A2A30/FFF?text=No+Image'">
+                    </div>
+                    <div class="profile-name">${escapeHtml(p.name)} ${verifiedHtml}</div>
+                    <div class="profile-bio">${escapeHtml(p.bio)}</div>
+                    <div class="sosmed-icons">${igHtml} ${ttHtml}</div>
+                    ${chatHtml}
+                `;
+                grid.appendChild(card);
+            });
+            document.querySelectorAll('.direct-link-icon').forEach(icon => {
+                icon.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const id = icon.getAttribute('data-link');
+                    const profileUrl = `${window.location.href.split('#')[0]}#profile-${id}`;
+                    navigator.clipboard.writeText(profileUrl);
+                    alert(`URL profil disalin: ${profileUrl}`);
+                });
+            });
+            if (window.adminModeActive) {
+                document.querySelectorAll('.edit-icon').forEach(icon => {
+                    icon.style.pointerEvents = 'auto';
+                    icon.style.opacity = '1';
+                    icon.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const id = parseInt(icon.getAttribute('data-edit'));
+                        editProfileById(id);
+                    });
+                });
+            } else {
+                document.querySelectorAll('.edit-icon').forEach(icon => {
+                    icon.style.pointerEvents = 'none';
+                    icon.style.opacity = '0.5';
+                });
+            }
+        }
+
+        function escapeHtml(str) { return String(str).replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+
+        let adminModeActive = false;
+
+        const adminModal = document.getElementById('adminModal');
+        const adminLock = document.getElementById('adminLock');
+        const unlockBtn = document.getElementById('unlockAdmin');
+        const adminPassInput = document.getElementById('adminPass');
+        const adminContentDiv = document.getElementById('adminContent');
+        const closeAdminBtn = document.getElementById('closeAdminBtn');
+
+        adminLock.addEventListener('click', () => {
+            adminModal.classList.add('active');
+            adminPassInput.value = '';
+            adminContentDiv.style.display = 'none';
+        });
+
+        unlockBtn.addEventListener('click', () => {
+            if (adminPassInput.value === 'rakkutheprince') {
+                adminContentDiv.style.display = 'block';
+                adminModeActive = true;
+                adminLock.innerHTML = '<i class="fas fa-unlock-alt"></i>';
+                adminLock.style.background = 'var(--accent)';
+                adminLock.style.color = 'black';
+                renderProfiles();
+                alert('Admin mode aktif. Klik ikon pensil untuk edit profil.');
+            } else alert('Password salah!');
+        });
+
+        function editProfileById(idx) {
+            const p = profiles[idx];
+            if (!p) return;
+            let newName = prompt('Edit Nama:', p.name);
+            if (newName && newName.trim()) p.name = newName.trim();
+            let newBio = prompt('Edit Bio:', p.bio);
+            if (newBio !== null) p.bio = newBio.trim();
+            let newAvatar = prompt('URL Avatar (kosongkan jika tidak berubah):', p.avatar);
+            if (newAvatar !== null && newAvatar.trim()) p.avatar = newAvatar.trim();
+            let newIg = prompt('URL Instagram:', p.ig || '');
+            if (newIg !== null) p.ig = newIg.trim() || null;
+            let newTt = prompt('URL TikTok:', p.tt || '');
+            if (newTt !== null) p.tt = newTt.trim() || null;
+            let newWa = prompt('Nomor WhatsApp (tanpa +):', p.waNumber || '');
+            if (newWa !== null) {
+                if (newWa.trim()) {
+                    p.waNumber = newWa.trim();
+                    p.wa = '+' + p.waNumber;
+                } else {
+                    p.waNumber = null;
+                    p.wa = null;
+                }
+            }
+            localStorage.setItem('nijigasaki_profiles', JSON.stringify(profiles));
+            renderProfiles();
+        }
+
+        closeAdminBtn.addEventListener('click', () => adminModal.classList.remove('active'));
+        adminModal.addEventListener('click', (e) => { if(e.target === adminModal) adminModal.classList.remove('active'); });
+
+        function loadTestimonials() {
+            const testimonials = [
+                { text: "Komunitasnya asik banget! Seru dan saling support.", author: "Hinata_Cos" },
+                { text: "Dapet banyak teman baru yang satu visi, love this place!", author: "KazeVA" },
+                { text: "Lingkungannya positif, gak toxic. Recommended buat yang mau belajar VA.", author: "Mochi_sei" },
+                { text: "Acara impersonate rutin, keren! Bikin makin percaya diri.", author: "Rin_chan" },
+                { text: "Adminnya ramah, member aktif, vibes-nya kekeluargaan.", author: "Luna_VA" },
+                { text: "Tempatnya tepat buat ngembangin bakat voice actor.", author: "Aoi_Shiina" }
+            ];
+            const grid = document.getElementById('testimonialGrid');
+            grid.innerHTML = '';
+            testimonials.forEach(t => {
+                const card = document.createElement('div');
+                card.className = 'testimonial-card';
+                card.innerHTML = `<div class="testimonial-text">"${escapeHtml(t.text)}"</div><div class="testimonial-author">— ${escapeHtml(t.author)}</div>`;
+                grid.appendChild(card);
+            });
+        }
+
+        function initDrawer() {
+            const drawer = document.getElementById('drawer');
+            const menuIcon = document.getElementById('menuIcon');
+            const closeDrawer = document.getElementById('closeDrawer');
+            menuIcon.addEventListener('click', () => drawer.classList.add('open'));
+            closeDrawer.addEventListener('click', () => drawer.classList.remove('open'));
+            const drawerHome = document.getElementById('drawerHome');
+            const drawerAdminSection = document.getElementById('drawerAdminSection');
+            const drawerKomunitas = document.getElementById('drawerKomunitas');
+            const drawerTesti = document.getElementById('drawerTesti');
+            drawerHome.addEventListener('click', (e) => { e.preventDefault(); drawer.classList.remove('open'); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+            drawerAdminSection.addEventListener('click', (e) => { e.preventDefault(); drawer.classList.remove('open'); adminLock.click(); });
+            drawerKomunitas.addEventListener('click', (e) => { e.preventDefault(); drawer.classList.remove('open'); document.getElementById('komunitas').scrollIntoView({ behavior: 'smooth' }); });
+            drawerTesti.addEventListener('click', (e) => { e.preventDefault(); drawer.classList.remove('open'); document.getElementById('testi').scrollIntoView({ behavior: 'smooth' }); });
+        }
+
+        const themeBtn = document.getElementById('themeToggle');
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light');
+            const isLight = document.body.classList.contains('light');
+            themeBtn.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+
+        const bgMusic = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicToggle');
+        let musicPlaying = false, musicStarted = false;
+        bgMusic.volume = 0.4;
+        async function startMusicOnce() {
+            if (musicStarted) return;
+            musicStarted = true;
+            try {
+                await bgMusic.play();
+                musicPlaying = true;
+                musicBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+            } catch(e) { musicBtn.innerHTML = '<i class="fas fa-volume-mute"></i>'; }
+            document.removeEventListener('click', startMusicOnce);
+            document.removeEventListener('touchstart', startMusicOnce);
+            document.removeEventListener('scroll', startMusicOnce);
+        }
+        document.addEventListener('click', startMusicOnce);
+        document.addEventListener('touchstart', startMusicOnce);
+        document.addEventListener('scroll', startMusicOnce);
+        musicBtn.addEventListener('click', () => {
+            if (musicPlaying) { bgMusic.pause(); musicBtn.innerHTML = '<i class="fas fa-volume-mute"></i>'; musicPlaying = false; }
+            else { bgMusic.play().then(()=>{ musicBtn.innerHTML = '<i class="fas fa-volume-up"></i>'; musicPlaying=true; }).catch(e=>{}); }
+        });
+
+        document.querySelectorAll('img, video').forEach(el => {
+            el.addEventListener('contextmenu', e => e.preventDefault());
+            el.addEventListener('dragstart', e => e.preventDefault());
+        });
+    })();
+</script>
+</body>
+</html>
